@@ -2,9 +2,9 @@
 
 namespace CraigPotter\LaravelIEHoneypot;
 
+use CraigPotter\LaravelIEHoneypot\Commands\LaravelIEHoneypotCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use CraigPotter\LaravelIEHoneypot\Commands\LaravelIEHoneypotCommand;
 
 class LaravelIEHoneypotServiceProvider extends PackageServiceProvider
 {
