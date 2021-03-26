@@ -1,21 +1,21 @@
 {
-    "name": ":vendor_name/:package_name",
-    "description": ":package_description",
+    "name": "craigpotter/laravel-ie-honeypot",
+    "description": "A small package to capture IE users and recommend they use a modern browser before they hit your site",
     "keywords": [
-        ":vendor_name",
-        ":package_name"
+        "craigpotter",
+        "laravel-ie-honeypot"
     ],
-    "homepage": "https://github.com/:vendor_name/:package_name",
+    "homepage": "https://github.com/craigpotter/laravel-ie-honeypot",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
+            "name": "Craig Potter",
+            "email": "me@craigpotter.co.uk",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^7.4",
         "spatie/laravel-package-tools": "^1.4.3",
         "illuminate/contracts": "^8.0"
     },
@@ -29,13 +29,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src",
-            "Spatie\\Skeleton\\Database\\Factories\\": "database/factories"
+            "CraigPotter\\LaravelIEHoneypot\\": "src",
+            "CraigPotter\\LaravelIEHoneypot\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Tests\\": "tests"
+            "CraigPotter\\LaravelIEHoneypot\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -49,10 +49,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\Skeleton\\SkeletonServiceProvider"
+                "CraigPotter\\LaravelIEHoneypot\\LaravelIEHoneypotServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "Spatie\\Skeleton\\SkeletonFacade"
+                "LaravelIEHoneypot": "CraigPotter\\LaravelIEHoneypot\\LaravelIEHoneypotFacade"
             }
         }
     },

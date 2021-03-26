@@ -1,12 +1,12 @@
 <?php
 
-namespace Spatie\Skeleton\Commands;
+namespace CraigPotter\LaravelIEHoneypot\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelIEHoneypotCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-ie-honeypot';
 
     public $description = 'My command';
 
