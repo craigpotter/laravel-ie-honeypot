@@ -2,9 +2,9 @@
 
 namespace CraigPotter\LaravelIEHoneypot\Tests;
 
+use CraigPotter\LaravelIEHoneypot\LaravelIEHoneypotServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use CraigPotter\LaravelIEHoneypot\LaravelIEHoneypotServiceProvider;
 
 class TestCase extends Orchestra
 {
