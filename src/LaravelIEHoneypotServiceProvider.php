@@ -2,9 +2,9 @@
 
 namespace CraigPotter\LaravelIEHoneypot;
 
+use CraigPotter\LaravelIEHoneypot\Commands\LaravelIEHoneypotCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use CraigPotter\LaravelIEHoneypot\Commands\LaravelIEHoneypotCommand;
 
 class LaravelIEHoneypotServiceProvider extends PackageServiceProvider
 {
@@ -18,8 +18,6 @@ class LaravelIEHoneypotServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-ie-honeypot')
             ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel_ie_honeypot_table')
             ->hasCommand(LaravelIEHoneypotCommand::class);
     }
 }
