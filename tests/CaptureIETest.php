@@ -43,7 +43,7 @@ class CaptureIETest extends TestCase
         })->middleware(CaptureIE::class);
 
         Route::any(config('ie-honeypot.redirect_url'), function () {
-            return 'should never see this';
+            return 'ok';
         })->middleware(CaptureIE::class);
     }
 

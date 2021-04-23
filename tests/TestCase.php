@@ -3,7 +3,6 @@
 namespace CraigPotter\LaravelIEHoneypot\Tests;
 
 use CraigPotter\LaravelIEHoneypot\LaravelIEHoneypotServiceProvider;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -11,10 +10,6 @@ class TestCase extends Orchestra
     public function setUp(): void
     {
         parent::setUp();
-
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'CraigPotter\\LaravelIEHoneypot\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
     }
 
     protected function getPackageProviders($app)
