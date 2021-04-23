@@ -1,4 +1,4 @@
-# A small package to capture IE users and recommend they use a modern browser before they hit your site
+# A small package to capture IE users and redirect them before they hit your site
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/craigpotter/laravel-ie-honeypot.svg?style=flat-square)](https://packagist.org/packages/craigpotter/laravel-ie-honeypot)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/craigpotter/laravel-ie-honeypot/run-tests?label=tests)](https://github.com/craigpotter/laravel-ie-honeypot/actions?query=workflow%3ATests+branch%3Amaster)
@@ -6,9 +6,9 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/craigpotter/laravel-ie-honeypot.svg?style=flat-square)](https://packagist.org/packages/craigpotter/laravel-ie-honeypot)
 
 
-Web development should be a progressive journey and let's face it, we all hate Microsoft Internet Explorer.
-Have you had an issue where users were using IE and getting JS errors and complaining about how you application is broken?
-This simple package might be for you then! Laravel IE Honeypot detects requests coming in to the app and redirects IE Users to a page of your choice. 
+Web development should be a progressive journey and let's face it, we all hate Microsoft Internet Explorer. 
+Have you had an issue where users were using IE, getting JS errors and then complaining about how your application is broken?
+This simple package might be for you then! Laravel IE Honeypot detects requests coming in to the app from users using IE and redirects to a page of your choice. 
 This should be a simple page informing the user their browser is too old or maybe even link them to [what they deserve](https://bit.ly/IqT6zt)
 
 ## Installation
