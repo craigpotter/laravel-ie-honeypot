@@ -27,8 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "CraigPotter\\LaravelIEHoneypot\\": "src",
-            "CraigPotter\\LaravelIEHoneypot\\Database\\Factories\\": "database/factories"
+            "CraigPotter\\LaravelIEHoneypot\\": "src"
         }
     },
     "autoload-dev": {

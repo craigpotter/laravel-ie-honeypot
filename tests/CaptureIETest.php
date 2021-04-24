@@ -3,6 +3,7 @@
 namespace CraigPotter\LaravelIEHoneypot\Tests;
 
 use CraigPotter\LaravelIEHoneypot\CaptureIE;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Testing\TestResponse;
 
@@ -13,6 +14,8 @@ class CaptureIETest extends TestCase
         parent::setUp();
 
         $this->withoutExceptionHandling();
+
+        $this->app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware('Illuminate\Session\Middleware\StartSession');
     
         TestResponse::macro('assertPassedIEProtection', function () {
             $this
@@ -39,6 +42,10 @@ class CaptureIETest extends TestCase
         });
 
         Route::any('test', function () {
+            return 'ok';
+        })->middleware(CaptureIE::class);
+
+        Route::any('another-test', function () {
             return 'ok';
         })->middleware(CaptureIE::class);
 
@@ -91,5 +98,74 @@ class CaptureIETest extends TestCase
         ])->get('test');
 
         $response->assertIEProtectionRedirected();
+    }
+
+    /** @test */
+    public function ie_users_can_bypass_redirection_at_own_risk()
+    {
+        $response = $this->withHeaders([
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko',
+        ])->get('test');
+
+        $response->assertIEProtectionRedirected();
+
+        $bypass = $this->withHeaders([
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko',
+        ])->get('test?ie-bypass=true');
+
+        $bypass->assertPassedIEProtection();
+    }
+
+    /** @test */
+    public function ie_users_cant_bypass_without_url_param()
+    {
+        $response = $this->withHeaders([
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko',
+        ])->get('test');
+
+        $response->assertIEProtectionRedirected();
+
+        $bypassFail = $this->withHeaders([
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko',
+        ])->get('another-test');
+
+        $bypassFail->assertIEProtectionRedirected();
+    }
+
+    /** @test */
+    public function ie_users_can_access_other_pages_after_successful_bypass()
+    {
+        $response = $this->withHeaders([
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko',
+            ])->get('test');
+    
+        $response->assertIEProtectionRedirected();
+    
+        $bypass = $this->withHeaders([
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko',
+            ])->get('test?ie-bypass=true');
+    
+        $bypass->assertPassedIEProtection();
+
+        $anotherBypass = $this->withHeaders([
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko',
+        ])->get('another-test');
+
+        $anotherBypass->assertPassedIEProtection();
+    }
+
+    /** @test */
+    public function ie_bypass_blade_directive_returns_correct_string()
+    {
+        $response = $this->withHeaders([
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko',
+        ])->get('test');
+
+        $response->assertIEProtectionRedirected();
+
+        $bladeSnippet = '@ieBypass';
+        $expectedCode = "<?php echo session('ie-bypass-trapped', ''); ?>?ie-bypass=true";
+
+        $this->assertEquals($expectedCode, Blade::compileString($bladeSnippet));
     }
 }

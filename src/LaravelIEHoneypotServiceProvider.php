@@ -2,7 +2,7 @@
 
 namespace CraigPotter\LaravelIEHoneypot;
 
-use CraigPotter\LaravelIEHoneypot\Commands\LaravelIEHoneypotCommand;
+use Illuminate\Support\Facades\Blade;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -12,7 +12,14 @@ class LaravelIEHoneypotServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-ie-honeypot')
-            ->hasConfigFile()
-            ->hasCommand(LaravelIEHoneypotCommand::class);
+            ->hasConfigFile();
+    }
+
+    public function bootingPackage()
+    {
+        parent::bootingPackage();
+        Blade::directive('ieBypass', function () {
+            return "<?php echo session('ie-bypass-trapped', ''); ?>?ie-bypass=true";
+        });
     }
 }

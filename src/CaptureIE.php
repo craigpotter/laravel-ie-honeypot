@@ -14,6 +14,25 @@ class CaptureIE
             return $next($request);
         }
 
+        if (config('ie-honeypot.bypass_enabled', true)) {
+            
+            //Allow users that already have been redirected to IE Honey Pot
+            if ($request->session()->has('ie-bypass')) {
+                return $next($request);
+            }
+
+
+            if ($request->has('ie-bypass')) {
+                $request->session()->put('ie-bypass', true);
+
+                return $next($request);
+            }
+
+    
+            $trappedUrl = $request->path();
+            $request->session()->put('ie-bypass-trapped', $trappedUrl);
+        }
+
         if ($request->path() == config('ie-honeypot.redirect_url')) {
             return $next($request);
         }
