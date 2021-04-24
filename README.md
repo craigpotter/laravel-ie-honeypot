@@ -38,10 +38,19 @@ return [
      */
     'redirect_url' => env('IE_HONEYPOT_REDIRECT_URL', '/ie-trap'),
 
+    /**
+     * This switch determines if the bypass functionality is enabled.
+     * This will allow use of the @ieBypass directive and allow IE users to access your
+     * site by adding ?ie-bypass=true to a url
+     */
+    'bypass_enabled' => env('IE_HONEYPOT_BYPASS_ENABLED', true),
+
 ];
 ```
 
 ## Usage
+
+If you want to display a page within your own application to your IE users, you should create a route with a simple layout and add the URL to your configuration file.  
 
 There are two main ways to use this package but both involve adding middleware to your routes. 
 
@@ -74,6 +83,23 @@ protected $middleware = [
    \CraigPotter\LaravelIEHoneypot\CaptureIE::class,
 ];
 
+```
+
+## Bypass
+
+If the `bypass_enabled` option is true in your configuration, the middleware will allow any user to a path if it has a url param of `ie-bypass=true`. 
+You can share links with this bypass if you need to e.g `https://your-app.com/contact-us?ie-bypass=true` 
+
+You also have the option to add this to your own bypass page to allow users to proceed at their own risk. 
+For example, if a user visits `/contact-us` with an IE browser, they would be redirected to our `redirect_url`, you can use the `@ieBypass` blade directive to automatically generate the bypass url for the initial page visited. In this case, it would be `/contact-us?ie-bypass=true`. 
+If we look at the view for that page: 
+
+```blade
+    <div>
+        <h1>Use a better browser!>
+
+        <a href="@ieBypass">Click here to proceed at your own risk</a>
+    </div>
 ```
 
 ## Testing
