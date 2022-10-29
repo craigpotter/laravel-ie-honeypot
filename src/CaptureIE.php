@@ -1,4 +1,5 @@
 <?php
+
 namespace CraigPotter\LaravelIEHoneypot;
 
 use Closure;
@@ -15,12 +16,10 @@ class CaptureIE
         }
 
         if (config('ie-honeypot.bypass_enabled', true)) {
-            
             //Allow users that already have been redirected to IE Honey Pot
             if ($request->session()->has('ie-bypass')) {
                 return $next($request);
             }
-
 
             if ($request->has('ie-bypass')) {
                 $request->session()->put('ie-bypass', true);
@@ -28,7 +27,6 @@ class CaptureIE
                 return $next($request);
             }
 
-    
             $trappedUrl = $request->path();
             $request->session()->put('ie-bypass-trapped', $trappedUrl);
         }
