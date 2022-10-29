@@ -16,7 +16,7 @@ class CaptureIETest extends TestCase
         $this->withoutExceptionHandling();
 
         $this->app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware('Illuminate\Session\Middleware\StartSession');
-    
+
         TestResponse::macro('assertPassedIEProtection', function () {
             $this
                 ->assertSuccessful()
@@ -37,7 +37,7 @@ class CaptureIETest extends TestCase
 
         TestResponse::macro('assertIEProtectionRedirected', function () {
             $this->assertRedirect(config('ie-honeypot.redirect_url'));
-        
+
             return $this;
         });
 
@@ -65,7 +65,7 @@ class CaptureIETest extends TestCase
 
         $response->assertPassedIEProtection();
     }
-    
+
     /** @test */
     public function requests_that_are_not_ie_succeed()
     {
@@ -77,7 +77,6 @@ class CaptureIETest extends TestCase
     /** @test */
     public function requests_to_ie_trap_always_act_as_expected()
     {
-
         // Test normal non IE
         $this->get(config('ie-honeypot.redirect_url'))
             ->assertPassedIEProtection();
@@ -136,15 +135,15 @@ class CaptureIETest extends TestCase
     public function ie_users_can_access_other_pages_after_successful_bypass()
     {
         $response = $this->withHeaders([
-                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko',
-            ])->get('test');
-    
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko',
+        ])->get('test');
+
         $response->assertIEProtectionRedirected();
-    
+
         $bypass = $this->withHeaders([
-                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko',
-            ])->get('test?ie-bypass=true');
-    
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko',
+        ])->get('test?ie-bypass=true');
+
         $bypass->assertPassedIEProtection();
 
         $anotherBypass = $this->withHeaders([
